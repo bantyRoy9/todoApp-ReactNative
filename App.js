@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     justifyContent:'center'
   },
   textInput:{
-    padding:'10px',
+    padding:10,
     borderWidth:1,
     
     flex:1

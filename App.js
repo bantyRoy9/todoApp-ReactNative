@@ -27,5 +27,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
- 
+  inputSection:{
+    flexDirection:'row',
+    justifyContent:'center'
+  },
+  textInput:{
+    padding:'10px',
+    borderWidth:1,
+    
+    flex:1
+  }
 });

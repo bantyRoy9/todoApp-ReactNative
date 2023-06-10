@@ -1,21 +1,19 @@
 import react, { useState } from 'react'
-import { Button, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import GoalInput from './Components/GoalInput';
+import GoalItem from './Components/GoalItem';
 
 export default function App() {
-  const [] = useState('');
-
+  const [goalItem,setGoalItem] = useState([]);
+  const setGoalInput = goalTitle =>{
+    setGoalItem(currentGoalInput=> [...currentGoalInput,{id: Math.random().toString(), value:goalTitle }]);
+    console.log(goalItem)
+  }
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.inputSection}>
-        <TextInput
-          style={styles.textInput} 
-          placeholder='Add list'
-          />
-        <Button title='Add'/>
-      </View>
-      <View>
-
-      </View>
+      <GoalInput setGoalInput={setGoalInput}/>
+      
+      <FlatList keyExtractor={ (items) =>items.id} data={goalItem} renderItem={(items)=> <GoalItem title={items.item.value} /> }/>
     </SafeAreaView>
   );
 }
@@ -23,19 +21,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    padding:10,
+    padding:18  ,
+    margin:18,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  inputSection:{
-    flexDirection:'row',
-    justifyContent:'center'
-  },
-  textInput:{
-    padding:'10px',
-    borderWidth:1,
-    
-    flex:1
-  }
+ 
 });

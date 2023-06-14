@@ -5,15 +5,25 @@ import GoalItem from './Components/GoalItem';
 
 export default function App() {
   const [goalItem,setGoalItem] = useState([]);
+  const [isVisible,setIsVisible] = useState(false);
   const setGoalInput = goalTitle =>{
     setGoalItem(currentGoalInput=> [...currentGoalInput,{id: Math.random().toString(), value:goalTitle }]);
-    console.log(goalItem)
+    setIsVisible(false);
+  }
+
+  const removeItem = id =>{
+    setGoalItem(currentGoalInput=> {
+      return currentGoalInput.filter((el)=>el.id !== id)
+    })
+  }
+  const closeModal =()=>{
+    setIsVisible(false);
   }
   return (
     <SafeAreaView style={styles.container}>
-      <GoalInput setGoalInput={setGoalInput}/>
-      
-      <FlatList keyExtractor={ (items) =>items.id} data={goalItem} renderItem={(items)=> <GoalItem title={items.item.value} /> }/>
+      <Button title='Add Goal' onPress={()=>setIsVisible(true)}/>
+      <GoalInput setGoalInput={setGoalInput} visible={isVisible} closeModal={closeModal} color="red"/>
+      <FlatList keyExtractor={ (items) =>items.id} data={goalItem} renderItem={(items)=> <GoalItem id={items.item.id} onDeleteItem={removeItem} title={items.item.value} /> }/>
     </SafeAreaView>
   );
 }
@@ -26,15 +36,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  inputSection:{
-    flexDirection:'row',
-    justifyContent:'center'
-  },
-  textInput:{
-    padding:'10px',
-    borderWidth:1,
-    
-    flex:1
   }
 });
